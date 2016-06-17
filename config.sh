@@ -14,6 +14,9 @@ dpkg -i google-chrome-stable_current_amd64.deb
 # /etc/apt/sources.list.d/google-chrome.list
 apt-get install -f
 
+# remove
+apt-get --purge autoremove firefox-esr
+
 # then to remove the sudo access from the current user
 #sudo /bin/rm /etc/sudoers.d/$USER
 #sudo -k

@@ -7,7 +7,6 @@ cls
 
 ::copy /y nul fp.txt >nul
 
-set "filename=checksum.txt"
 set "hash="
 
 set n=0

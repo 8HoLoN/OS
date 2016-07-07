@@ -30,11 +30,8 @@ for /L %%i in (0,1,%n%) do (
     set /A m+=1
 )
 
-:: echo/
-:: echo !hash! %%i >> fp.txt
-(for /L %%i in (0,1,%n%) do (
-    echo !hashVector[%%i]! !pathVector[%%i]!
-)) > fp.txt
+set filename=fingerprint.txt
+call:saveHashFile %filename% hashVector pathVector %n%
 
 ::echo.&pause&goto:eof
 goto:eof
@@ -44,6 +41,7 @@ goto:eof
 :computeHash       -- Compute Hash
 ::                 -- %~1: return hash
 ::                 -- %~2: filename
+setlocal
 REM.--function body here
 
 for /f "delims=" %%a in ('CertUtil -hashfile %~2 MD5 ^| findstr /r /c:"^[0-9a-f][0-9a-f] [0-9a-f]"') do set hash=%%~a
@@ -53,5 +51,26 @@ SET cleanHash=!hash:%SEARCHTEXT%=%REPLACETEXT%!
 
 (ENDLOCAL & REM -- RETURN VALUES
     IF "%~1" NEQ "" SET %~1=%cleanHash%
+)
+GOTO:EOF
+:saveHashFile      -- save Hash file
+::                 -- %~1: filename
+::                 -- %~2: hashVector
+::                 -- %~3: pathVector
+::                 -- %~4: vector length
+setlocal
+REM.--function body here
+set filename=%~1
+set hashVector=%~2
+set pathVector=%~3
+set n=%~4
+:: echo/
+:: echo !hash! %%i >> fp.txt
+(for /L %%i in (0,1,%n%) do (
+    echo !hashVector[%%i]! !pathVector[%%i]!
+)) > %filename%
+
+(ENDLOCAL & REM -- RETURN VALUES
+    IF "%~1" NEQ "" SET %~1=
 )
 GOTO:EOF

@@ -11,3 +11,6 @@
  
  * mv /etc/apt/apt.conf.d/proxy.conf /etc/apt/apt.conf.d/proxy.conf_
  * `Acquire::http::Proxy "http://ptx.proxy.corp.sopra:8080";`
+
+# valid repo source
+* https://doc.ubuntu-fr.org/depots_focal
